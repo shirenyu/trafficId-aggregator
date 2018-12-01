@@ -60,7 +60,7 @@ public class PacketFromIpv4 implements Ipv4PacketListener {
             return;
         Socket socket = Socket.getSocket(ethernetPacket, ipv4Packet, packetReceived);
 
-        if (!socket.getSrcAddress().getValue().equals("10.108.124.97")&&!socket.getDestAddress().getValue().equals("10.108.124.97"))
+        if (!socket.getSrcAddress().getValue().equals("10.108.124.64")&&!socket.getDestAddress().getValue().equals("10.108.124.64"))
             return ;
 
         Socket re_socket= socket.reverse();
