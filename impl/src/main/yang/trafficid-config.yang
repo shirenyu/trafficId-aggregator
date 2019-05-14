@@ -1,0 +1,23 @@
+module trafficid-config {
+
+    yang-version 1;
+    namespace "urn:opendaylight:packet:trafficid-config";
+    prefix "trafficid-config";
+
+    description "This module contains the base configuration for implementation.";
+
+    revision 2019-3-21 {
+            description "Initial revision.";
+    }
+
+    container trafficid-config {
+        leaf monitor-ip {
+            type string;
+            default "10.152.152.11";
+        }
+        leaf is-active {
+            type boolean;
+            default true;
+        }
+    }
+}

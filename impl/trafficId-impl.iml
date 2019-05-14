@@ -7,10 +7,22 @@
           <property key="Bundle-Description" value="OpenDaylight is leading the transformation to Open Software Defined Networking (SDN). For more information, please see https://www.opendaylight.org" />
           <property key="Bundle-Vendor" value="OpenDaylight" />
           <property key="Bundle-DocURL" value="https://www.opendaylight.org" />
-          <property key="Include-Resource" value="org/opendaylight/blueprint/impl-blueprint.xml=$MODULE_DIR$/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml,$MODULE_DIR$/target/classes/LICENSE,META-INF/git.properties=-target/classes/META-INF/git.properties" />
+          <property key="Export-Package" value="javax.persistence.*" />
+          <property key="Include-Resource" value="org/opendaylight/blueprint/impl-blueprint.xml=$MODULE_DIR$/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml,META-INF/services/org.opendaylight.yangtools.yang.binding.YangModelBindingProvider=$MODULE_DIR$/target/generated-sources/spi/META-INF/services/org.opendaylight.yangtools.yang.binding.YangModelBindingProvider,META-INF/yang/trafficid-config.yang=$MODULE_DIR$/target/generated-sources/yang/META-INF/yang/trafficid-config.yang,$MODULE_DIR$/target/classes/LICENSE,META-INF/git.properties=-target/classes/META-INF/git.properties" />
           <property key="Bundle-Name" value="ODL :: org.bupt.trafficId :: trafficId-impl" />
         </additionalProperties>
         <additionalJARContents />
+      </configuration>
+    </facet>
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="" />
+        <datasource-mapping>
+          <factory-entry name="Entities" />
+          <factory-entry name="odl" />
+        </datasource-mapping>
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>
     </facet>
   </component>
@@ -21,14 +33,15 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/mdsal-binding" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/spi" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/yang" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/config-binding" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="trafficId-api" />
-    <orderEntry type="library" name="Maven: org.opendaylight.mdsal:yang-binding:0.10.0-Carbon" level="project" />
-    <orderEntry type="library" name="Maven: org.opendaylight.yangtools:util:1.1.0-Carbon" level="project" />
-    <orderEntry type="library" name="Maven: com.github.romix:java-concurrent-hash-trie-map:0.2.23-ODL" level="project" />
     <orderEntry type="library" name="Maven: org.opendaylight.openflowplugin.model:model-flow-service:0.4.0-Carbon" level="project" />
     <orderEntry type="library" name="Maven: org.opendaylight.openflowplugin.model:model-flow-base:0.4.0-Carbon" level="project" />
     <orderEntry type="library" name="Maven: org.opendaylight.openflowjava:openflow-protocol-api:0.9.0-Carbon" level="project" />
@@ -102,6 +115,9 @@
     <orderEntry type="library" name="Maven: org.opendaylight.yangtools:yang-model-util:1.1.0-Carbon" level="project" />
     <orderEntry type="library" name="Maven: org.opendaylight.mdsal:mdsal-binding-dom-codec:0.10.0-Carbon" level="project" />
     <orderEntry type="library" name="Maven: org.opendaylight.mdsal:mdsal-binding-generator-api:0.10.0-Carbon" level="project" />
+    <orderEntry type="library" name="Maven: org.opendaylight.mdsal:yang-binding:0.10.0-Carbon" level="project" />
+    <orderEntry type="library" name="Maven: org.opendaylight.yangtools:util:1.1.0-Carbon" level="project" />
+    <orderEntry type="library" name="Maven: com.github.romix:java-concurrent-hash-trie-map:0.2.23-ODL" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.slf4j:slf4j-simple:1.7.21" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.code.findbugs:annotations:3.0.0" level="project" />

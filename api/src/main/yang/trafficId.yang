@@ -6,4 +6,82 @@ module trafficId {
     revision "2015-01-05" {
         description "Initial revision of trafficId model";
     }
+
+    rpc getALLFlow {
+        output
+        {
+            list flowlist
+            {
+                leaf srcPort {
+                    type uint16;
+                }
+                leaf dstPort {
+                    type uint16;
+                }
+                leaf srcIP {
+                    type string;
+                }
+                leaf dstIP {
+                    type string;
+                }
+                leaf protocol {
+                    type string;
+                }
+                leaf category {
+                    type string;
+                }
+                /*
+                leaf srcMac {
+                    type string;
+                }
+                leaf dstMac {
+                    type string;
+                }
+                */
+            }
+        }
+    }
+
+    //这里flowlist和getallflow Rpc 有相同的名字方便于中端解析
+    rpc getFlow {
+        input {
+            leaf parent {
+                type string;
+            }
+            leaf id {
+                type string;
+            }
+        }
+        output {
+            list flowlist
+            {
+                leaf srcPort {
+                    type uint16;
+                }
+                leaf dstPort {
+                    type uint16;
+                }
+                leaf srcIP {
+                    type string;
+                }
+                leaf dstIP {
+                    type string;
+                }
+                leaf protocol {
+                    type string;
+                }
+                leaf category {
+                    type string;
+                }
+                /*
+                leaf srcMac {
+                    type string;
+                }
+                leaf dstMac {
+                    type string;
+                }
+                */
+            }
+        }
+    }
 }

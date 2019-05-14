@@ -381,8 +381,8 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.opendaylight.l2switch.packethandler:packethandler-model:0.5.0-Carbon" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.opendaylight.l2switch.packethandler:packethandler-impl:0.5.0-Carbon" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.opendaylight.controller:config-api:0.6.0-Carbon" level="project" />
-    <orderEntry type="module" module-name="trafficId-api" scope="RUNTIME" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.opendaylight.mdsal:yang-binding:0.10.0-Carbon" level="project" />
+    <orderEntry type="module" module-name="trafficId-api" scope="RUNTIME" />
     <orderEntry type="module" module-name="trafficId-cli" scope="RUNTIME" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.karaf.region:org.apache.karaf.region.persist:3.0.8" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.equinox:region:1.0.0.v20110506" level="project" />

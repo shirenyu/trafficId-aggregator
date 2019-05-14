@@ -290,8 +290,8 @@
     <orderEntry type="library" name="Maven: org.opendaylight.l2switch.packethandler:packethandler-model:0.5.0-Carbon" level="project" />
     <orderEntry type="library" name="Maven: org.opendaylight.l2switch.packethandler:packethandler-impl:0.5.0-Carbon" level="project" />
     <orderEntry type="library" name="Maven: org.opendaylight.controller:config-api:0.6.0-Carbon" level="project" />
-    <orderEntry type="module" module-name="trafficId-api" />
     <orderEntry type="library" name="Maven: org.opendaylight.mdsal:yang-binding:0.10.0-Carbon" level="project" />
+    <orderEntry type="module" module-name="trafficId-api" />
     <orderEntry type="module" module-name="trafficId-cli" />
     <orderEntry type="library" name="Maven: org.apache.karaf.shell:org.apache.karaf.shell.console:3.0.8" level="project" />
     <orderEntry type="library" name="Maven: jline:jline:2.13" level="project" />

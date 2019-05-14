@@ -9,15 +9,20 @@ package org.bupt.trafficId.impl;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.json.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Feature {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Feature.class);
 
     private double forp_psec = 0.0;   //每秒的前向流包数
     private double forb_psec = 0.0;   //每秒的前向流字节数
@@ -36,9 +41,23 @@ public class Feature {
     private List<Long> back_time = new ArrayList<>();   //后向包时间
     private List<Long> twoway_time = new ArrayList<>(); //双向包时间
 
+    private String flow_category;
 
-    public Feature(Socket socket, long payloadLength) {
-        start_time = System.nanoTime();
+    public String getFlow_category() {
+        return flow_category;
+    }
+
+    public void setFlow_category(String flow_category) {
+        this.flow_category = flow_category;
+    }
+
+    public Feature(Socket socket, long payloadLength ,long time) {
+
+        if(time == 0L) {
+            System.out.println("ovs didn't paste timestamp");
+            return;
+        }
+        start_time = time;
         f_socket = socket;
         forp_psec += 1;
         forb_psec += payloadLength;
@@ -46,9 +65,13 @@ public class Feature {
         twoway_time.add(start_time);
     }
 
-    public void Addsocket(Socket socket, long payloadLength) {
-        long arr_time = System.nanoTime();
-        if ((arr_time - start_time)/1000000000 < 15)
+    public void Addsocket(Socket socket, long payloadLength ,long arr_time) {
+        if(arr_time == 0L) {
+            System.out.println("ovs didn't paste timestamp");
+            return;
+        }
+
+        if ((arr_time - start_time)/1000000000.0 < 15)
         {
             if (f_socket.equals(socket))
             {
@@ -72,11 +95,11 @@ public class Feature {
                 hasgetfeature = true;
                 double[] features = getfeature();
                 try {
-                    String flow_class = sendPost(features);
+                    flow_category = SocketClient(features);
+                    LOG.info("src ip:"+f_socket.getSrcAddress().toString()+"dest"+f_socket.getDestAddress().toString()+"class: "+flow_category);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         }
     }
@@ -84,6 +107,7 @@ public class Feature {
     private double[] getTimefeature(List<Long> list)
     {
         long min,max,avg,stdev,term;
+        Collections.sort(list);
 
         if (list.size()>=2)
         {
@@ -145,53 +169,39 @@ public class Feature {
         return re_feature;
     }
 
-    private String sendPost(double[] features) throws Exception {
-        String ADD_URL = "http://localhost:9090/";
-        try {
-            //创建连接
-            URL url = new URL(ADD_URL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setDoInput(true);
-            connection.setRequestMethod("POST");
-            connection.setUseCaches(false);
-            connection.setInstanceFollowRedirects(true);
-            connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
-            connection.connect();
-            //POST请求
-            DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-            //double [] s = {0.185057126078,0.00645419651858,0.481939760647,0.283092759311,0.18505331384,0.00644995074112,0.481938563054,0.290628159183,0.181845218205,7.77736795561e-06,0.481938954245,0.287651977725,0.00115449149874,4.15050485232e-05,0.00102669357802,0.000873092663746,5.99918280016e-05,9.93023420161e-09,0.481938954245};
-            JSONArray jsonArray=new JSONArray();
-            for(int i = 0 ; i < features.length ;i++){  //依次将数组元素添加进JSONArray对象中
-                jsonArray.put(features[i]);
-            }
-            out.write(jsonArray.toString().getBytes("UTF-8"));
-            out.flush();
-            out.close();
-            //读取响应
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String lines;
-            StringBuffer sb = new StringBuffer("");
-            while ((lines = reader.readLine()) != null) {
-                lines = new String(lines.getBytes(), "utf-8");
-                sb.append(lines);
-            }
-            System.out.println(sb);
-            reader.close();
-            // 断开连接
-            connection.disconnect();
-            return sb.toString();
 
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+    public String SocketClient (double[] features)
+    {
+        try {
+            java.net.Socket socket = new java.net.Socket("127.0.0.1", 9991);
+            OutputStream os=socket.getOutputStream();//字节输出流
+            PrintWriter pw=new PrintWriter(os);//将输出流包装为打印流
+
+            JSONArray jsonArray = new JSONArray(features);
+
+            pw.write(jsonArray.toString());
+            pw.flush();
+            socket.shutdownOutput();//关闭输出流
+
+            InputStream is=socket.getInputStream();
+            BufferedReader in = new BufferedReader(new InputStreamReader(is));
+            String info=null;
+//            while((info=in.readLine())!=null){
+//                System.out.println("获得path："+info);
+//            }
+            info = in.readLine();
+            is.close();
+            in.close();
+            socket.close();
+            if (info!=null)
+                return info;
+            else
+                return "err";
+
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            return "err";
         }
-        return "failed";
     }
+
 }

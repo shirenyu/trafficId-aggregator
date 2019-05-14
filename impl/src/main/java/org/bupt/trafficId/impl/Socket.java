@@ -7,11 +7,14 @@
  */
 package org.bupt.trafficId.impl;
 
+import org.bupt.trafficId.impl.util.Ipv4Option;
+import org.opendaylight.controller.liblldp.PacketException;
 import org.opendaylight.l2switch.packethandler.decoders.utils.BitBufferHelper;
 import org.opendaylight.l2switch.packethandler.decoders.utils.BufferException;
 import org.opendaylight.l2switch.packethandler.decoders.utils.NetUtils;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Address;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev130715.MacAddress;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnectorKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.packet.ethernet.rev140528.ethernet.packet.received.packet.chain.packet.EthernetPacket;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.packet.ipv4.rev140528.Ipv4PacketReceived;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.packet.ipv4.rev140528.KnownIpProtocols;
@@ -84,6 +87,9 @@ public class Socket {
 		this.dscp = dscp;
 		return this;
 	}
+
+
+
 	/**
 	 * reverse the socket
 	 * @return
@@ -96,7 +102,8 @@ public class Socket {
 			  .setDestAddress(this.srcAddress)
 			  .setProtocol(this.protocol)
 			  .setSrcPort(this.destPort)
-			  .setDestPort(this.srcPort);
+			  .setDestPort(this.srcPort)
+			  .setDscp(this.dscp);
 		return socket;
 	}
 
@@ -105,12 +112,12 @@ public class Socket {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((destAddress == null) ? 0 : destAddress.hashCode());
-		result = prime * result + ((destMac == null) ? 0 : destMac.hashCode());
+		//result = prime * result + ((destMac == null) ? 0 : destMac.hashCode());
 		result = prime * result + destPort;
-		result = prime * result + dscp;
+		//result = prime * result + dscp;
 		result = prime * result + ((protocol == null) ? 0 : protocol.hashCode());
 		result = prime * result + ((srcAddress == null) ? 0 : srcAddress.hashCode());
-		result = prime * result + ((srcMac == null) ? 0 : srcMac.hashCode());
+		//result = prime * result + ((srcMac == null) ? 0 : srcMac.hashCode());
 		result = prime * result + srcPort;
 		return result;
 	}
@@ -128,15 +135,15 @@ public class Socket {
 				return false;
 		} else if (!destAddress.equals(other.destAddress))
 			return false;
-		if (destMac == null) {
-			if (other.destMac != null)
-				return false;
-		} else if (!destMac.equals(other.destMac))
-			return false;
+//		if (destMac == null) {
+//			if (other.destMac != null)
+//				return false;
+//		} else if (!destMac.equals(other.destMac))
+//			return false;
 		if (destPort != other.destPort)
 			return false;
-		if (dscp != other.dscp)
-			return false;
+//		if (dscp != other.dscp)
+//			return false;
 		if (protocol != other.protocol)
 			return false;
 		if (srcAddress == null) {
@@ -144,11 +151,11 @@ public class Socket {
 				return false;
 		} else if (!srcAddress.equals(other.srcAddress))
 			return false;
-		if (srcMac == null) {
-			if (other.srcMac != null)
-				return false;
-		} else if (!srcMac.equals(other.srcMac))
-			return false;
+//		if (srcMac == null) {
+//			if (other.srcMac != null)
+//				return false;
+//		} else if (!srcMac.equals(other.srcMac))
+//			return false;
 		if (srcPort != other.srcPort)
 			return false;
 		return true;
@@ -165,7 +172,8 @@ public class Socket {
         socket.setSrcAddress(ipv4Packet.getSourceIpv4());
         socket.setDestAddress(ipv4Packet.getDestinationIpv4());
         socket.setDscp(ipv4Packet.getDscp().getValue());
-        if(ipv4Packet.getProtocol()==KnownIpProtocols.Tcp){
+
+		if(ipv4Packet.getProtocol()==KnownIpProtocols.Tcp){
         	socket.setProtocol(KnownIpProtocols.Tcp);
         	byte[] payload=packetReceived.getPayload();
         	int bitOffset = ipv4Packet.getPayloadOffset() * NetUtils.NumBitsInAByte;
