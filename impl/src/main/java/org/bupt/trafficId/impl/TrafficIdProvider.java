@@ -91,23 +91,23 @@ public class TrafficIdProvider {
         Socket socket = new Socket();
         Ipv4Address ipv4Address = new Ipv4Address("10.0.0.1");
         socket.setSrcAddress(ipv4Address);
-        Ipv4Address ipv4Address2 = new Ipv4Address("4.3.2.1");
+        Ipv4Address ipv4Address2 = new Ipv4Address("46.134.193.35");
         socket.setDestAddress(ipv4Address2);
         socket.setProtocol(KnownIpProtocols.Ipv6Icmp);
 
-        socket.setSrcPort(1);
-        socket.setDestPort(2);
+        socket.setSrcPort(59829);
+        socket.setDestPort(80);
         Feature feature = new Feature(socket,12,3);
         feature.setFlow_category("1");
         socketFeatureMap.put(socket,feature);
 
         Socket socket1 = new Socket();
-        socket1.setSrcPort(2);
-        socket1.setDestPort(2);
+        socket1.setSrcPort(49431);
+        socket1.setDestPort(443);
 
         Ipv4Address ipv4Address1 = new Ipv4Address("10.0.0.1");
         socket1.setSrcAddress(ipv4Address1);
-        Ipv4Address ipv4Address12 = new Ipv4Address("4.3.2.4");
+        Ipv4Address ipv4Address12 = new Ipv4Address("46.236.64.41");
         socket1.setDestAddress(ipv4Address12);
         socket1.setProtocol(KnownIpProtocols.Ipv6Icmp);
 
@@ -116,12 +116,12 @@ public class TrafficIdProvider {
         socketFeatureMap.put(socket1,feature1);
 
         Socket socket2 = new Socket();
-        socket2.setSrcPort(3);
-        socket2.setDestPort(2);
+        socket2.setSrcPort(38114);
+        socket2.setDestPort(80);
 
         Ipv4Address ipv4Address123 = new Ipv4Address("10.0.0.1");
         socket2.setSrcAddress(ipv4Address123);
-        Ipv4Address ipv4Address1232 = new Ipv4Address("4.3.2.6");
+        Ipv4Address ipv4Address1232 = new Ipv4Address("54.34.113.35");
         socket2.setDestAddress(ipv4Address1232);
 
         socket2.setProtocol(KnownIpProtocols.Igmp);
@@ -131,8 +131,8 @@ public class TrafficIdProvider {
         socketFeatureMap.put(socket2,feature2);
 
         Socket socket3 = new Socket();
-        socket3.setSrcPort(3);
-        socket3.setDestPort(14);
+        socket3.setSrcPort(38251);
+        socket3.setDestPort(80);
 
         socket3.setSrcAddress(ipv4Address123);
         socket3.setDestAddress(ipv4Address1232);
@@ -144,12 +144,12 @@ public class TrafficIdProvider {
         socketFeatureMap.put(socket3,feature3);
 
         Socket socket4 = new Socket();
-        socket4.setSrcPort(3);
-        socket4.setDestPort(223);
+        socket4.setSrcPort(58812);
+        socket4.setDestPort(443);
 
         Ipv4Address ipv4Address1234 = new Ipv4Address("10.0.0.2");
         socket4.setSrcAddress(ipv4Address1234);
-        Ipv4Address ipv4Address12324 = new Ipv4Address("4.3.2.12");
+        Ipv4Address ipv4Address12324 = new Ipv4Address("56.127.14.38");
         socket4.setDestAddress(ipv4Address12324);
 
         socket4.setProtocol(KnownIpProtocols.Igmp);
@@ -160,12 +160,12 @@ public class TrafficIdProvider {
         socketFeatureMap.put(socket4,feature4);
 
         Socket socket5 = new Socket();
-        socket5.setSrcPort(3);
-        socket5.setDestPort(223);
+        socket5.setSrcPort(36910);
+        socket5.setDestPort(443);
 
         Ipv4Address ipv4Address12345 = new Ipv4Address("10.0.0.2");
         socket5.setSrcAddress(ipv4Address12345);
-        Ipv4Address ipv4Address123245 = new Ipv4Address("10.0.0.1");
+        Ipv4Address ipv4Address123245 = new Ipv4Address("34.125.38.65");
         socket5.setDestAddress(ipv4Address123245);
 
         socket5.setProtocol(KnownIpProtocols.Igmp);
@@ -175,5 +175,6 @@ public class TrafficIdProvider {
 
         socketFeatureMap.put(socket5,feature5);
     }
+
 
 }

@@ -103,24 +103,29 @@ public class PacketFromIpv4 implements Ipv4PacketListener {
 //
 //        if (!dhcplist.contains(socket.getSrcAddress().getValue())&&!dhcplist.contains(socket.getDestAddress().getValue()))
 //            return ;
-        //提取ovs打入的时间戳
-        Ipv4Option ipv4Option=new Ipv4Option();
-        Long time = 0L;
-        try {
-            ipv4Option=(Ipv4Option)ipv4Option.deserialize(ipv4Packet.getIpv4Options(),0,0);
-            long time1=ipv4Option.getSsecond();
-            long time2=ipv4Option.getSNanosecond();
-            time = time1*1000000000+time2;
-        } catch (PacketException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+
+//        //提取ovs打入的时间戳
+//        Ipv4Option ipv4Option=new Ipv4Option();
+//        Long time = 0L;
+//        try {
+//            ipv4Option=(Ipv4Option)ipv4Option.deserialize(ipv4Packet.getIpv4Options(),0,0);
+//            long time1=ipv4Option.getSsecond();
+//            long time2=ipv4Option.getSNanosecond();
+//            time = time1*1000000000+time2;
+//        } catch (PacketException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+
+
+        // 由于修改ovs代码对延迟插件有影响，故该版本time按系统时间获得
+        long time = System.nanoTime();
 
 
 
 
-        if (!trafficidConfig.getMonitorIp().equals(socket.getSrcAddress().getValue()) && !trafficidConfig.getMonitorIp().equals(socket.getDestAddress().getValue()))
-            return;
+//        if (!trafficidConfig.getMonitorIp().equals(socket.getSrcAddress().getValue()) && !trafficidConfig.getMonitorIp().equals(socket.getDestAddress().getValue()))
+//            return;
 
         Socket re_socket= socket.reverse();
 

@@ -173,7 +173,7 @@ public class Feature {
     public String SocketClient (double[] features)
     {
         try {
-            java.net.Socket socket = new java.net.Socket("127.0.0.1", 9991);
+            java.net.Socket socket = new java.net.Socket("10.108.126.64", 9991);
             OutputStream os=socket.getOutputStream();//字节输出流
             PrintWriter pw=new PrintWriter(os);//将输出流包装为打印流
 
